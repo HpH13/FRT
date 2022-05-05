@@ -5,6 +5,8 @@ import RPi.GPIO as GPIO
 from time import sleep
 from PIL import Image #Pillow lib for handling images
 
+led = LED(23)
+
 labels = ["Harry", "Gerrard",] #Names of people
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml') #Haarcascade classifier
@@ -14,6 +16,7 @@ recognizer.load("face-trainner.yml") #Load YML file created from face traniner
 cap = cv2.VideoCapture(0) #Get vidoe feed from the Camera
 
 while(True):
+    led.off()
     ret, img = cap.read() # Break video into frames 
     gray  = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert Video frame to Greyscale
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5, ) #Recognize faces
@@ -27,6 +30,7 @@ while(True):
             font = cv2.FONT_HERSHEY_SIMPLEX #Font style
             name = labels[id_] #Acquire name from the List using ID number
             confidence = "{0}%".format(round(100 - confidence)) #confidence rating 
+            led.on()
             
             cv2.putText(img, name, (x+5,y-5), font, 1, (255,255,255), 2) #Place name around face
             cv2.putText(img, str(confidence), (x+5,y+h-5), font,1, (225,225,0), 2) #Place confidence rating around face
@@ -35,6 +39,8 @@ while(True):
             name = "Unkown"
             font = cv2.FONT_HERSHEY_SIMPLEX #Font style
             confidence = "{0}%".format(round(100 - confidence))
+            led.off()
+            
             cv2.putText(img, name, (x+5,y-5), font, 1, (255,255,255), 2)
             cv2.putText(img, str(confidence), (x+5,y+h-5), font,1, (225,225,0), 2)
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
