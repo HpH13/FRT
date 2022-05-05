@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 from PIL import Image #Pillow lib for handling images
 
-labels = ["Harry", "Unkown",] #Names of people
+labels = ["Harry", "Gerrard",] #Names of people
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml') #Haarcascade classifier
 recognizer = cv2.face.createLBPHFaceRecognizer()
@@ -23,7 +23,7 @@ while(True):
     	id_, confidence = recognizer.predict(roi_gray) #recognize the Face
     	
     
-    	if (confidence>40):
+    	if (confidence<100):
             font = cv2.FONT_HERSHEY_SIMPLEX #Font style
             name = labels[id_] #Acquire name from the List using ID number
             confidence = "{0}%".format(round(100 - confidence)) #confidence rating 
@@ -33,8 +33,9 @@ while(True):
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2) #Place box around face
         else:
             name = "Unkown"
+            font = cv2.FONT_HERSHEY_SIMPLEX #Font style
             confidence = "{0}%".format(round(100 - confidence))
-            v2.putText(img, name, (x+5,y-5), font, 1, (255,255,255), 2)
+            cv2.putText(img, name, (x+5,y-5), font, 1, (255,255,255), 2)
             cv2.putText(img, str(confidence), (x+5,y+h-5), font,1, (225,225,0), 2)
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
 
