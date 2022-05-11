@@ -1,4 +1,4 @@
-#train with the faces folder to create a YAML file
+#train with the faces_images folder to create a YAML file
 
 import cv2 #OpenCV
 import numpy as np #convert Images to Numerical array 
@@ -6,7 +6,7 @@ import os
 from PIL import Image #Pillow lib for handling images
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml') #Haarcascade classifier
-recognizer = cv2.face.createLBPHFaceRecognizer()
+recognizer = cv2.face.createLBPHFaceRecognizer() #recognizer 
 
 Face_ID = -1 
 pev_person_name = ""
@@ -30,7 +30,7 @@ for root, dirs, files in os.walk(Face_Images): #go to the face image directory
 
 			
 			Gery_Image = Image.open(path).convert("L") # convert image to greysclae using Pillow
-			Crop_Image = Gery_Image.resize( (800,800) , Image.ANTIALIAS) #Crop the Grey Image to 800*800 
+			Crop_Image = Gery_Image.resize( (330,330) , Image.ANTIALIAS) #Crop the Grey Image to 330*330
 			Final_Image = np.array(Crop_Image, "uint8")
 			#print(Numpy_Image)
 			faces = face_cascade.detectMultiScale(Final_Image, scaleFactor=1.5, minNeighbors=5) #Detect face in all images 
