@@ -1,0 +1,6 @@
+When downloading this entire Repository 
+Please delete the Face_Image one and create a normal folder, called Face_Images.
+Within that folder add pictures of the people you want the system to recognise within their own folders. 
+For example 
+If you want to recognise 'Steven Gerrard'. Create folder called 'Steven Gerrard' within the Face_Images folder you have just created.
+Then add pictures into this folder. 
